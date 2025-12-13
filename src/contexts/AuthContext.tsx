@@ -1,0 +1,58 @@
+import { User, onAuthStateChanged } from 'firebase/auth';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { auth } from '../config/firebase';
+import { AuthService } from '../services/authService';
+import { UserProfile } from '../types/user';
+
+interface AuthContextType {
+    user: User | null;
+    userProfile: UserProfile | null;
+    loading: boolean;
+    refreshProfile: () => Promise<void>;
+}
+
+const AuthContext = createContext<AuthContextType>({
+    user: null,
+    userProfile: null,
+    loading: true,
+    refreshProfile: async () => { },
+});
+
+export const useAuth = () => useContext(AuthContext);
+
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+    const [user, setUser] = useState<User | null>(null);
+    const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
+    const [loading, setLoading] = useState(true);
+
+    const fetchProfile = async (uid: string) => {
+        const profile = await AuthService.getUserProfile(uid);
+        setUserProfile(profile);
+    };
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+            setUser(firebaseUser);
+            if (firebaseUser) {
+                await fetchProfile(firebaseUser.uid);
+            } else {
+                setUserProfile(null);
+            }
+            setLoading(false);
+        });
+
+        return unsubscribe;
+    }, []);
+
+    const refreshProfile = async () => {
+        if (user) {
+            await fetchProfile(user.uid);
+        }
+    };
+
+    return (
+        <AuthContext.Provider value={{ user, userProfile, loading, refreshProfile }}>
+            {children}
+        </AuthContext.Provider>
+    );
+};
