@@ -25,13 +25,21 @@ function RootLayoutNav() {
       router.replace('/auth/login');
     } else if (user) {
       // 2. Logged in
-      if (!userProfile?.packageId) {
-        // 2a. No Package Selected -> Go to Package Selection
-        if (!inOnboardingGroup) {
+      const isProfileComplete = userProfile?.age && userProfile?.height && userProfile?.weight;
+
+      if (!isProfileComplete) {
+        // 2a. Profile Incomplete -> Go to Profile Setup
+        // Check if we are already in the profile-setup screen to avoid loop
+        if (segments[1] !== 'profile-setup') {
+          router.replace('/(onboarding)/profile-setup');
+        }
+      } else if (!userProfile?.packageId) {
+        // 2b. No Package Selected -> Go to Package Selection
+        if (segments[1] !== 'package-selection') {
           router.replace('/(onboarding)/package-selection');
         }
       } else {
-        // 2b. Package Selected -> Go to Main App (Tabs)
+        // 2c. Everything set -> Go to Main App (Tabs)
         if (inAuthGroup || inOnboardingGroup) {
           router.replace('/(tabs)');
         }

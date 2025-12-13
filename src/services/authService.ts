@@ -3,7 +3,7 @@ import {
     signInWithEmailAndPassword,
     signOut
 } from "firebase/auth";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../config/firebase";
 import { UserProfile } from "../types/user";
 
@@ -59,6 +59,17 @@ export const AuthService = {
         } catch (error) {
             console.error("Error fetching user profile:", error);
             return null;
+        }
+    },
+
+    // Update User Profile
+    updateUserProfile: async (uid: string, data: Partial<UserProfile>) => {
+        try {
+            const userRef = doc(db, "users", uid);
+            await updateDoc(userRef, data);
+        } catch (error) {
+            console.error("Error updating user profile:", error);
+            throw error;
         }
     }
 };
