@@ -3,30 +3,23 @@ import React, { useState } from 'react';
 import { ActivityIndicator, Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { AuthService } from '../../src/services/authService';
 
-export default function RegisterScreen() {
+export default function LoginScreen() {
     const router = useRouter();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const handleRegister = async () => {
-        if (!email || !password || !confirmPassword) {
+    const handleLogin = async () => {
+        if (!email || !password) {
             Alert.alert('Error', 'Please fill in all fields');
-            return;
-        }
-        if (password !== confirmPassword) {
-            Alert.alert('Error', 'Passwords do not match');
             return;
         }
         setLoading(true);
         try {
-            // NOTE: We are creating a basic user profile here. 
-            // Detailed profile setup (age, weight, etc.) will happen in the Profile Setup / Onboarding flow.
-            await AuthService.register(email, password, {});
-            // Success - AuthContext picks it up
+            await AuthService.login(email, password);
+            // AuthContext will detect change and _layout will handle redirect
         } catch (error: any) {
-            Alert.alert('Registration Failed', error.message);
+            Alert.alert('Login Failed', error.message);
         } finally {
             setLoading(false);
         }
@@ -34,8 +27,8 @@ export default function RegisterScreen() {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Create Account</Text>
-            <Text style={styles.subtitle}>Start your wellness journey today</Text>
+            <Text style={styles.title}>Welcome Back</Text>
+            <Text style={styles.subtitle}>Sign in to continue your journey</Text>
 
             <View style={styles.inputContainer}>
                 <TextInput
@@ -53,28 +46,26 @@ export default function RegisterScreen() {
                     onChangeText={setPassword}
                     secureTextEntry
                 />
-                <TextInput
-                    style={styles.input}
-                    placeholder="Confirm Password"
-                    value={confirmPassword}
-                    onChangeText={setConfirmPassword}
-                    secureTextEntry
-                />
             </View>
 
-            <TouchableOpacity style={styles.button} onPress={handleRegister} disabled={loading}>
+            <TouchableOpacity style={styles.button} onPress={handleLogin} disabled={loading}>
                 {loading ? (
                     <ActivityIndicator color="#fff" />
                 ) : (
-                    <Text style={styles.buttonText}>Sign Up</Text>
+                    <Text style={styles.buttonText}>Login</Text>
                 )}
             </TouchableOpacity>
 
+            {/* TEMP: Seed Button */}
+            <TouchableOpacity onPress={() => import('../../src/utils/seedPackages').then(m => m.seedPackages().then(() => Alert.alert('Seeded!')))} style={{ marginTop: 10, alignSelf: 'center' }}>
+                <Text style={{ color: '#ccc', fontSize: 12 }}>Seed Data</Text>
+            </TouchableOpacity>
+
             <View style={styles.footer}>
-                <Text style={styles.footerText}>Already have an account? </Text>
-                <Link href="/auth/login" asChild>
+                <Text style={styles.footerText}>Don't have an account? </Text>
+                <Link href={"/register" as any} asChild>
                     <TouchableOpacity>
-                        <Text style={styles.link}>Login</Text>
+                        <Text style={styles.link}>Register</Text>
                     </TouchableOpacity>
                 </Link>
             </View>

@@ -1,11 +1,9 @@
-import { User, onAuthStateChanged } from 'firebase/auth';
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { auth } from '../config/firebase';
-import { AuthService } from '../services/authService';
+import { AuthService, MockUser } from '../services/authService';
 import { UserProfile } from '../types/user';
 
 interface AuthContextType {
-    user: User | null;
+    user: MockUser | null;
     userProfile: UserProfile | null;
     loading: boolean;
     refreshProfile: () => Promise<void>;
@@ -21,7 +19,7 @@ const AuthContext = createContext<AuthContextType>({
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-    const [user, setUser] = useState<User | null>(null);
+    const [user, setUser] = useState<MockUser | null>(null);
     const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
     const [loading, setLoading] = useState(true);
 
@@ -31,10 +29,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-            setUser(firebaseUser);
-            if (firebaseUser) {
-                await fetchProfile(firebaseUser.uid);
+        const unsubscribe = AuthService.onAuthStateChanged(async (mockUser) => {
+            setUser(mockUser);
+            if (mockUser) {
+                await fetchProfile(mockUser.uid);
             } else {
                 setUserProfile(null);
             }

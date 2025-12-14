@@ -16,44 +16,42 @@ function RootLayoutNav() {
   useEffect(() => {
     if (loading) return;
 
-    const inAuthGroup = segments[0] === 'auth';
-    const inOnboardingGroup = segments[0] === '(onboarding)';
-    const inTabsGroup = segments[0] === '(tabs)';
+    const inAuthGroup = (segments[0] as string) === '(auth)';
+    const inOnboardingGroup = (segments[0] as string) === '(onboarding)';
 
     if (!user && !inAuthGroup) {
-      // 1. Not logged in -> Go to Login
-      router.replace('/auth/login');
+      router.replace('/login' as any);
     } else if (user) {
-      // 2. Logged in
-      const isProfileComplete = userProfile?.age && userProfile?.height && userProfile?.weight;
+      const isProfileComplete =
+        userProfile?.age && userProfile?.height && userProfile?.weight;
 
       if (!isProfileComplete) {
-        // 2a. Profile Incomplete -> Go to Profile Setup
-        // Check if we are already in the profile-setup screen to avoid loop
-        if (segments[1] !== 'profile-setup') {
-          router.replace('/(onboarding)/profile-setup');
+        const atProfileSetup = (segments[0] as string) === '(onboarding)' && (segments[1] as string) === 'profile-setup';
+        if (!atProfileSetup) {
+          router.replace('/profile-setup' as any);
         }
       } else if (!userProfile?.packageId) {
-        // 2b. No Package Selected -> Go to Package Selection
-        if (segments[1] !== 'package-selection') {
-          router.replace('/(onboarding)/package-selection');
+        const atPackageSelection = (segments[0] as string) === '(onboarding)' && (segments[1] as string) === 'package-selection';
+        if (!atPackageSelection) {
+          router.replace('/package-selection' as any);
         }
       } else {
-        // 2c. Everything set -> Go to Main App (Tabs)
         if (inAuthGroup || inOnboardingGroup) {
-          router.replace('/(tabs)');
+          router.replace('/' as any);
         }
       }
     }
   }, [user, userProfile, loading, segments]);
 
+
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="auth" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
+        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         <Stack.Screen name="(onboarding)" options={{ headerShown: false }} />
+        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+
       </Stack>
       <StatusBar style="auto" />
     </ThemeProvider>

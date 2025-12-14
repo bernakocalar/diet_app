@@ -1,3 +1,4 @@
+import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { ActivityIndicator, Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { useAuth } from '../../src/contexts/AuthContext';
@@ -38,7 +39,7 @@ export default function ProfileSetupScreen() {
                 weight: Number(form.weight)
             });
             await refreshProfile();
-            router.replace('/(onboarding)/package-selection');
+            router.replace("/(tabs)/explore" as any);
         } catch (error) {
             Alert.alert("Error", "Failed to save profile.");
         } finally {

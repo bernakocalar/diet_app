@@ -35,7 +35,7 @@ export default function PackageSelectionScreen() {
             await PackageService.assignPackageToUser(user.uid, selectedPackageId);
             await refreshProfile();
             // Navigate to main app
-            router.replace('/(tabs)');
+            router.replace('/(tabs)' as any);
         } catch (error) {
             Alert.alert("Error", "Failed to select package");
             setLoading(false);
