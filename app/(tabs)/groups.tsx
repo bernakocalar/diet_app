@@ -1,10 +1,12 @@
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { FlatList, RefreshControl, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Group, GroupService } from '../../src/services/groupService';
 
 export default function GroupsScreen() {
+    const router = useRouter();
     const [groups, setGroups] = useState<Group[]>([]);
     const [loading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
@@ -31,7 +33,11 @@ export default function GroupsScreen() {
     };
 
     const renderItem = ({ item }: { item: Group }) => (
-        <TouchableOpacity style={styles.card} activeOpacity={0.8}>
+        <TouchableOpacity
+            style={styles.card}
+            activeOpacity={0.8}
+            onPress={() => router.push(`/group/${item.id}` as any)}
+        >
             <LinearGradient
                 colors={['rgba(255, 255, 255, 0.05)', 'rgba(255, 255, 255, 0.02)']}
                 style={styles.cardGradient}

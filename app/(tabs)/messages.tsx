@@ -1,7 +1,12 @@
 import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
+import { useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { FlatList, RefreshControl, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Pressable, RefreshControl, StyleSheet, Text, View } from 'react-native';
+import Animated, { FadeInDown, Layout, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 import { Conversation, MessageService } from '../../src/services/messageService';
+
+const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 export default function MessagesScreen() {
     const [conversations, setConversations] = useState<Conversation[]>([]);
@@ -39,11 +44,85 @@ export default function MessagesScreen() {
         return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
     };
 
-    const renderItem = ({ item }: { item: Conversation }) => (
-        <TouchableOpacity style={styles.card} activeOpacity={0.7}>
-            <View style={styles.avatarContainer}>
-                <Ionicons name="person" size={20} color="#FFF" />
+    const renderItem = ({ item, index }: { item: Conversation; index: number }) => {
+        return <MessageItem item={item} index={index} formatTime={formatTime} />;
+    };
+
+    return (
+        <View style={styles.container}>
+            <View style={styles.header}>
+                <Text style={styles.title}>Messages</Text>
+                <Pressable
+                    style={({ pressed }) => [styles.searchButton, { opacity: pressed ? 0.7 : 1 }]}
+                >
+                    <Ionicons name="search" size={24} color="#fff" />
+                </Pressable>
             </View>
+
+            <Animated.FlatList
+                data={conversations}
+                renderItem={renderItem}
+                keyExtractor={(item) => item.id}
+                contentContainerStyle={styles.listContent}
+                refreshControl={
+                    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#fff" />
+                }
+                ListEmptyComponent={
+                    !loading ? <Text style={styles.emptyText}>No messages yet.</Text> : null
+                }
+                itemLayoutAnimation={Layout.springify()}
+            />
+        </View>
+    );
+}
+
+const MessageItem = ({
+    item,
+    index,
+    formatTime,
+}: {
+    item: Conversation;
+    index: number;
+    formatTime: (t: number) => string;
+}) => {
+    const scale = useSharedValue(1);
+    const router = useRouter();
+
+    const animatedStyle = useAnimatedStyle(() => {
+        return {
+            transform: [{ scale: scale.value }],
+        };
+    });
+
+    const onPressIn = () => {
+        scale.value = withSpring(0.96);
+    };
+
+    const onPressOut = () => {
+        scale.value = withSpring(1);
+    };
+
+    const handlePress = () => {
+        router.push(`/chat/${item.id}` as any);
+    };
+
+    return (
+        <AnimatedPressable
+            onPress={handlePress}
+            onPressIn={onPressIn}
+            onPressOut={onPressOut}
+            style={[styles.card, animatedStyle]}
+            entering={FadeInDown.delay(index * 100).springify().damping(12)}
+            layout={Layout.springify()}
+        >
+            <LinearGradient
+                colors={['#FE6B8B', '#FF8E53']}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={styles.avatarContainer}
+            >
+                <Ionicons name="person" size={20} color="#FFF" />
+            </LinearGradient>
 
             <View style={styles.contentContainer}>
                 <View style={styles.headerRow}>
@@ -51,7 +130,10 @@ export default function MessagesScreen() {
                     <Text style={styles.time}>{formatTime(item.timestamp)}</Text>
                 </View>
                 <View style={styles.messageRow}>
-                    <Text style={[styles.lastMessage, item.unreadCount > 0 && styles.unreadMessage]} numberOfLines={1}>
+                    <Text
+                        style={[styles.lastMessage, item.unreadCount > 0 && styles.unreadMessage]}
+                        numberOfLines={1}
+                    >
                         {item.lastMessage}
                     </Text>
                     {item.unreadCount > 0 && (
@@ -61,33 +143,9 @@ export default function MessagesScreen() {
                     )}
                 </View>
             </View>
-        </TouchableOpacity>
+        </AnimatedPressable>
     );
-
-    return (
-        <View style={styles.container}>
-            <View style={styles.header}>
-                <Text style={styles.title}>Messages</Text>
-                <TouchableOpacity style={styles.searchButton}>
-                    <Ionicons name="search" size={24} color="#fff" />
-                </TouchableOpacity>
-            </View>
-
-            <FlatList
-                data={conversations}
-                renderItem={renderItem}
-                keyExtractor={item => item.id}
-                contentContainerStyle={styles.listContent}
-                refreshControl={
-                    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#fff" />
-                }
-                ListEmptyComponent={
-                    !loading ? <Text style={styles.emptyText}>No messages yet.</Text> : null
-                }
-            />
-        </View>
-    );
-}
+};
 
 const styles = StyleSheet.create({
     container: {
@@ -115,6 +173,7 @@ const styles = StyleSheet.create({
     },
     listContent: {
         paddingHorizontal: 20,
+        paddingBottom: 20,
     },
     card: {
         flexDirection: 'row',
@@ -122,13 +181,12 @@ const styles = StyleSheet.create({
         paddingVertical: 15,
         borderBottomWidth: 1,
         borderBottomColor: '#222',
+        backgroundColor: '#121212', // Ensure background for animation
     },
     avatarContainer: {
         width: 50,
         height: 50,
         borderRadius: 25,
-        backgroundColor: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)', // Fallback color
-        backgroundColor: '#5d5d5d', // Fallback
         justifyContent: 'center',
         alignItems: 'center',
         marginRight: 15,
@@ -183,5 +241,5 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginTop: 50,
         fontSize: 16,
-    }
+    },
 });
