@@ -2,6 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Pressable, RefreshControl, StyleSheet, Text, View } from 'react-native';
 import Animated, { FadeInDown, Layout, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 import { useAuth } from '../../src/contexts/AuthContext';
@@ -10,6 +11,7 @@ import { Conversation, MessageService } from '../../src/services/messageService'
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 export default function MessagesScreen() {
+    const { t } = useTranslation();
     const router = useRouter();
     const { user } = useAuth();
     const [conversations, setConversations] = useState<Conversation[]>([]);
@@ -55,7 +57,7 @@ export default function MessagesScreen() {
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <Text style={styles.title}>Messages</Text>
+                <Text style={styles.title}>{t('messages.title')}</Text>
                 <Pressable
                     style={({ pressed }) => [styles.searchButton, { opacity: pressed ? 0.7 : 1 }]}
                 >
@@ -72,7 +74,7 @@ export default function MessagesScreen() {
                     <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#fff" />
                 }
                 ListEmptyComponent={
-                    !loading ? <Text style={styles.emptyText}>No messages yet.</Text> : null
+                    !loading ? <Text style={styles.emptyText}>{t('messages.noMessages')}</Text> : null
                 }
                 itemLayoutAnimation={Layout.springify()}
             />

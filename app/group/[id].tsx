@@ -2,6 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
     ActivityIndicator,
     ScrollView,
@@ -13,6 +14,7 @@ import {
 import { Group, GroupService } from '../../src/services/groupService';
 
 export default function GroupDetailScreen() {
+    const { t } = useTranslation();
     const { id } = useLocalSearchParams();
     const router = useRouter();
     const [group, setGroup] = useState<Group | null>(null);
@@ -93,18 +95,18 @@ export default function GroupDetailScreen() {
                                 <Ionicons name="time" size={24} color="#ff9f43" />
                             </View>
                             <View style={styles.sessionInfo}>
-                                <Text style={styles.sessionLabel}>Next Live Session</Text>
+                                <Text style={styles.sessionLabel}>{t('groups.nextSession')}</Text>
                                 <Text style={styles.sessionValue}>{group.nextSession}</Text>
                             </View>
                             <TouchableOpacity style={styles.joinButton}>
-                                <Text style={styles.joinButtonText}>Join</Text>
+                                <Text style={styles.joinButtonText}>{t('groups.join')}</Text>
                             </TouchableOpacity>
                         </LinearGradient>
                     )}
 
                     {/* About Section */}
                     <View style={styles.section}>
-                        <Text style={styles.sectionTitle}>About</Text>
+                        <Text style={styles.sectionTitle}>{t('groups.about')}</Text>
                         <Text style={styles.description}>{group.description}</Text>
                     </View>
 
@@ -135,13 +137,11 @@ export default function GroupDetailScreen() {
                                 style={styles.gradientButton}
                             >
                                 <Ionicons name="chatbubbles-outline" size={22} color="#fff" style={{ marginRight: 8 }} />
-                                <Text style={styles.primaryActionText}>Enter Group Chat</Text>
+                                <Text style={styles.primaryActionText}>{t('groups.enterChat')}</Text>
                             </LinearGradient>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.secondaryAction}>
-                            <Text style={styles.secondaryActionText}>Invite Friends</Text>
-                        </TouchableOpacity>
+                        <Text style={styles.secondaryActionText}>{t('groups.invite')}</Text>
                     </View>
                 </View>
             </ScrollView>

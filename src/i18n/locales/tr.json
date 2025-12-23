@@ -1,0 +1,58 @@
+{
+    "common": {
+        "loading": "Yükleniyor...",
+        "error": "Bir hata oluştu",
+        "save": "Kaydet",
+        "cancel": "İptal",
+        "back": "Geri",
+        "next": "İleri",
+        "search": "Ara"
+    },
+    "auth": {
+        "login": "Giriş Yap",
+        "signup": "Kayıt Ol",
+        "email": "E-posta",
+        "password": "Şifre",
+        "forgotPassword": "Şifremi unuttum?",
+        "noAccount": "Hesabın yok mu? Kayıt Ol",
+        "hasAccount": "Zaten hesabın var mı? Giriş Yap",
+        "welcome": "Tekrar Hoşgeldin"
+    },
+    "tabs": {
+        "home": "Ana Sayfa",
+        "history": "Geçmiş",
+        "groups": "Gruplar",
+        "messages": "Mesajlar",
+        "profile": "Profil"
+    },
+    "groups": {
+        "title": "Gruplarım",
+        "subtitle": "Topluluğunla bağlantı kur",
+        "members": "üye",
+        "join": "Katıl",
+        "nextSession": "Sonraki Oturum",
+        "about": "Hakkında",
+        "enterChat": "Grup Sohbetine Gir",
+        "invite": "Arkadaş Davet Et",
+        "empty": "Henüz hiçbir gruba katılmadın."
+    },
+    "messages": {
+        "title": "Mesajlar",
+        "noMessages": "Henüz mesaj yok.",
+        "typeMessage": "Bir mesaj yaz...",
+        "conversation": "Sohbet"
+    },
+    "profile": {
+        "account": "Hesap",
+        "settings": "Ayarlar",
+        "personalDetails": "Kişisel Bilgiler",
+        "dietPreferences": "Diyet Tercihleri",
+        "subscription": "Abonelik",
+        "pro": "PRO",
+        "notifications": "Bildirimler",
+        "privacy": "Gizlilik ve Güvenlik",
+        "logout": "Çıkış Yap",
+        "logoutConfirm": "Çıkış yapmak istediğinize emin misiniz?",
+        "language": "Dil"
+    }
+}

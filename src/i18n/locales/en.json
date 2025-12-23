@@ -1,0 +1,58 @@
+{
+    "common": {
+        "loading": "Loading...",
+        "error": "An error occurred",
+        "save": "Save",
+        "cancel": "Cancel",
+        "back": "Back",
+        "next": "Next",
+        "search": "Search"
+    },
+    "auth": {
+        "login": "Login",
+        "signup": "Sign Up",
+        "email": "Email",
+        "password": "Password",
+        "forgotPassword": "Forgot Password?",
+        "noAccount": "Don't have an account? Sign Up",
+        "hasAccount": "Already have an account? Login",
+        "welcome": "Welcome Back"
+    },
+    "tabs": {
+        "home": "Home",
+        "history": "History",
+        "groups": "Groups",
+        "messages": "Messages",
+        "profile": "Profile"
+    },
+    "groups": {
+        "title": "My Groups",
+        "subtitle": "Connect with your community",
+        "members": "members",
+        "join": "Join",
+        "nextSession": "Next Session",
+        "about": "About",
+        "enterChat": "Enter Group Chat",
+        "invite": "Invite Friends",
+        "empty": "You haven't joined any groups yet."
+    },
+    "messages": {
+        "title": "Messages",
+        "noMessages": "No messages yet.",
+        "typeMessage": "Type a message...",
+        "conversation": "Conversation"
+    },
+    "profile": {
+        "account": "Account",
+        "settings": "Settings",
+        "personalDetails": "Personal Details",
+        "dietPreferences": "Diet Preferences",
+        "subscription": "Subscription",
+        "pro": "PRO",
+        "notifications": "Notifications",
+        "privacy": "Privacy & Security",
+        "logout": "Logout",
+        "logoutConfirm": "Are you sure you want to logout?",
+        "language": "Language"
+    }
+}

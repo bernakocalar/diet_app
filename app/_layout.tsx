@@ -3,6 +3,7 @@ import { Stack, useRouter, useSegments } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
+import '../src/i18n'; // Init i18n
 
 import { AuthProvider, useAuth } from '../src/contexts/AuthContext';
 import { useColorScheme } from '../src/hooks/useColorScheme';

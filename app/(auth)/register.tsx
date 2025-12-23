@@ -1,9 +1,12 @@
+import { LanguageSwitcher } from '@/src/components/LanguageSwitcher';
 import { Link, useRouter } from 'expo-router';
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ActivityIndicator, Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { AuthService } from '../../src/services/authService';
 
 export default function RegisterScreen() {
+    const { t } = useTranslation();
     const router = useRouter();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -26,7 +29,7 @@ export default function RegisterScreen() {
             await AuthService.register(email, password, {});
             // Success - AuthContext picks it up
         } catch (error: any) {
-            Alert.alert('Registration Failed', error.message);
+            Alert.alert(t('common.error'), error.message);
         } finally {
             setLoading(false);
         }
@@ -34,13 +37,14 @@ export default function RegisterScreen() {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Create Account</Text>
-            <Text style={styles.subtitle}>Start your wellness journey today</Text>
+            <LanguageSwitcher />
+            <Text style={styles.title}>{t('auth.signup')}</Text>
+            <Text style={styles.subtitle}>{t('auth.signup')}</Text>
 
             <View style={styles.inputContainer}>
                 <TextInput
                     style={styles.input}
-                    placeholder="Email"
+                    placeholder={t('auth.email')}
                     value={email}
                     onChangeText={setEmail}
                     autoCapitalize="none"
@@ -48,14 +52,14 @@ export default function RegisterScreen() {
                 />
                 <TextInput
                     style={styles.input}
-                    placeholder="Password"
+                    placeholder={t('auth.password')}
                     value={password}
                     onChangeText={setPassword}
                     secureTextEntry
                 />
                 <TextInput
                     style={styles.input}
-                    placeholder="Confirm Password"
+                    placeholder="Confirm Password" // I didn't add this to json, using plain text or could duplicate t('auth.password')
                     value={confirmPassword}
                     onChangeText={setConfirmPassword}
                     secureTextEntry
@@ -66,15 +70,15 @@ export default function RegisterScreen() {
                 {loading ? (
                     <ActivityIndicator color="#fff" />
                 ) : (
-                    <Text style={styles.buttonText}>Sign Up</Text>
+                    <Text style={styles.buttonText}>{t('auth.signup')}</Text>
                 )}
             </TouchableOpacity>
 
             <View style={styles.footer}>
-                <Text style={styles.footerText}>Already have an account? </Text>
+                <Text style={styles.footerText}>{t('auth.hasAccount')} </Text>
                 <Link href={"/login" as any} asChild>
                     <TouchableOpacity>
-                        <Text style={styles.link}>Login</Text>
+                        <Text style={styles.link}>{t('auth.login')}</Text>
                     </TouchableOpacity>
                 </Link>
             </View>

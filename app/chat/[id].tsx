@@ -2,6 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
     FlatList,
     KeyboardAvoidingView,
@@ -17,6 +18,7 @@ import { useAuth } from '../../src/contexts/AuthContext';
 import { Message, MessageService } from '../../src/services/messageService';
 
 export default function ChatDetailScreen() {
+    const { t } = useTranslation();
     const { id } = useLocalSearchParams();
     const router = useRouter();
     const insets = useSafeAreaInsets();
@@ -84,7 +86,7 @@ export default function ChatDetailScreen() {
                 <View style={styles.headerInfo}>
                     <Text style={styles.headerTitle}>Chat</Text>
                     {/* Ideally fetch participant name from service or pass it via params */}
-                    <Text style={styles.headerSubtitle}>Conversation</Text>
+                    <Text style={styles.headerSubtitle}>{t('messages.conversation')}</Text>
                 </View>
                 <TouchableOpacity style={styles.headerAction}>
                     <Ionicons name="ellipsis-horizontal" size={24} color="#fff" />
@@ -110,7 +112,7 @@ export default function ChatDetailScreen() {
                 <View style={[styles.inputContainer, { paddingBottom: Math.max(insets.bottom, 20) }]}>
                     <TextInput
                         style={styles.input}
-                        placeholder="Type a message..."
+                        placeholder={t('messages.typeMessage')}
                         placeholderTextColor="#666"
                         value={inputText}
                         onChangeText={setInputText}

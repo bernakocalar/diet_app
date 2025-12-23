@@ -2,16 +2,20 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FlatList, RefreshControl, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useAuth } from '../../src/contexts/AuthContext';
 import { Group, GroupService } from '../../src/services/groupService';
 
 export default function GroupsScreen() {
+    const { t } = useTranslation();
     const router = useRouter();
     const { user } = useAuth();
     const [groups, setGroups] = useState<Group[]>([]);
     const [loading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
+
+    // ... (fetchGroups fetch logic)
 
     const fetchGroups = async () => {
         if (!user) return;
@@ -51,7 +55,7 @@ export default function GroupsScreen() {
                     </View>
                     <View style={styles.headerInfo}>
                         <Text style={styles.groupName}>{item.name}</Text>
-                        <Text style={styles.memberCount}>{item.memberCount} members</Text>
+                        <Text style={styles.memberCount}>{item.memberCount} {t('groups.members')}</Text>
                     </View>
                     <Ionicons name="chevron-forward" size={20} color="#555" />
                 </View>
@@ -61,7 +65,7 @@ export default function GroupsScreen() {
                 {item.nextSession && (
                     <View style={styles.sessionContainer}>
                         <Ionicons name="time-outline" size={14} color="#ff9f43" />
-                        <Text style={styles.sessionText}>Next: {item.nextSession}</Text>
+                        <Text style={styles.sessionText}>{t('groups.nextSession')}: {item.nextSession}</Text>
                     </View>
                 )}
             </LinearGradient>
@@ -74,8 +78,8 @@ export default function GroupsScreen() {
                 colors={['#0F2027', '#203A43']}
                 style={styles.header}
             >
-                <Text style={styles.title}>My Groups</Text>
-                <Text style={styles.subtitle}>Connect with your community</Text>
+                <Text style={styles.title}>{t('groups.title')}</Text>
+                <Text style={styles.subtitle}>{t('groups.subtitle')}</Text>
             </LinearGradient>
 
             <FlatList
@@ -87,7 +91,7 @@ export default function GroupsScreen() {
                     <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#fff" />
                 }
                 ListEmptyComponent={
-                    !loading ? <Text style={styles.emptyText}>You haven't joined any groups yet.</Text> : null
+                    !loading ? <Text style={styles.emptyText}>{t('groups.empty')}</Text> : null
                 }
             />
         </View>

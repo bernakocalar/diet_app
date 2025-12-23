@@ -1,14 +1,17 @@
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
+import { User } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Alert, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { AuthService, MockUser } from '../../src/services/authService';
+import { AuthService } from '../../src/services/authService';
 import { UserProfile } from '../../src/types/user';
 
 export default function ProfileScreen() {
+    const { t, i18n } = useTranslation();
     const router = useRouter();
-    const [user, setUser] = useState<MockUser | null>(null);
+    const [user, setUser] = useState<User | null>(null);
     const [profile, setProfile] = useState<UserProfile | null>(null);
 
     useEffect(() => {
@@ -24,12 +27,12 @@ export default function ProfileScreen() {
 
     const handleLogout = async () => {
         Alert.alert(
-            "Logout",
-            "Are you sure you want to logout?",
+            t('profile.logout'),
+            t('profile.logoutConfirm'),
             [
-                { text: "Cancel", style: "cancel" },
+                { text: t('common.cancel'), style: "cancel" },
                 {
-                    text: "Logout",
+                    text: t('profile.logout'),
                     style: "destructive",
                     onPress: async () => {
                         await AuthService.logout();
@@ -40,8 +43,13 @@ export default function ProfileScreen() {
         );
     };
 
+    const toggleLanguage = () => {
+        const nextLang = i18n.language === 'en' ? 'tr' : 'en';
+        i18n.changeLanguage(nextLang);
+    };
+
     if (!user) {
-        return <View style={styles.loadingContainer}><Text style={styles.text}>Loading...</Text></View>;
+        return <View style={styles.loadingContainer}><Text style={styles.text}>{t('common.loading')}</Text></View>;
     }
 
     return (
@@ -85,13 +93,13 @@ export default function ProfileScreen() {
             </LinearGradient>
 
             <View style={styles.section}>
-                <Text style={styles.sectionTitle}>Account</Text>
+                <Text style={styles.sectionTitle}>{t('profile.account')}</Text>
 
                 <TouchableOpacity style={styles.menuItem}>
                     <View style={styles.menuIconBox}>
                         <Ionicons name="person-outline" size={22} color="#fff" />
                     </View>
-                    <Text style={styles.menuText}>Personal Details</Text>
+                    <Text style={styles.menuText}>{t('profile.personalDetails')}</Text>
                     <Ionicons name="chevron-forward" size={20} color="#555" />
                 </TouchableOpacity>
 
@@ -99,7 +107,7 @@ export default function ProfileScreen() {
                     <View style={styles.menuIconBox}>
                         <Ionicons name="nutrition-outline" size={22} color="#fff" />
                     </View>
-                    <Text style={styles.menuText}>Diet Preferences</Text>
+                    <Text style={styles.menuText}>{t('profile.dietPreferences')}</Text>
                     <Ionicons name="chevron-forward" size={20} color="#555" />
                 </TouchableOpacity>
 
@@ -107,22 +115,22 @@ export default function ProfileScreen() {
                     <View style={styles.menuIconBox}>
                         <Ionicons name="card-outline" size={22} color="#fff" />
                     </View>
-                    <Text style={styles.menuText}>Subscription</Text>
+                    <Text style={styles.menuText}>{t('profile.subscription')}</Text>
                     <View style={styles.badge}>
-                        <Text style={styles.badgeText}>PRO</Text>
+                        <Text style={styles.badgeText}>{t('profile.pro')}</Text>
                     </View>
                     <Ionicons name="chevron-forward" size={20} color="#555" />
                 </TouchableOpacity>
             </View>
 
             <View style={styles.section}>
-                <Text style={styles.sectionTitle}>Settings</Text>
+                <Text style={styles.sectionTitle}>{t('profile.settings')}</Text>
 
                 <TouchableOpacity style={styles.menuItem}>
                     <View style={styles.menuIconBox}>
                         <Ionicons name="notifications-outline" size={22} color="#fff" />
                     </View>
-                    <Text style={styles.menuText}>Notifications</Text>
+                    <Text style={styles.menuText}>{t('profile.notifications')}</Text>
                     <Ionicons name="chevron-forward" size={20} color="#555" />
                 </TouchableOpacity>
 
@@ -130,7 +138,16 @@ export default function ProfileScreen() {
                     <View style={styles.menuIconBox}>
                         <Ionicons name="shield-checkmark-outline" size={22} color="#fff" />
                     </View>
-                    <Text style={styles.menuText}>Privacy & Security</Text>
+                    <Text style={styles.menuText}>{t('profile.privacy')}</Text>
+                    <Ionicons name="chevron-forward" size={20} color="#555" />
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.menuItem} onPress={toggleLanguage}>
+                    <View style={styles.menuIconBox}>
+                        <Ionicons name="globe-outline" size={22} color="#fff" />
+                    </View>
+                    <Text style={styles.menuText}>{t('profile.language')}</Text>
+                    <Text style={{ color: '#888', marginRight: 10 }}>{i18n.language === 'en' ? 'English' : 'Türkçe'}</Text>
                     <Ionicons name="chevron-forward" size={20} color="#555" />
                 </TouchableOpacity>
 
@@ -138,7 +155,7 @@ export default function ProfileScreen() {
                     <View style={[styles.menuIconBox, { backgroundColor: 'rgba(255, 107, 107, 0.1)' }]}>
                         <Ionicons name="log-out-outline" size={22} color="#FF6B6B" />
                     </View>
-                    <Text style={[styles.menuText, { color: '#FF6B6B' }]}>Logout</Text>
+                    <Text style={[styles.menuText, { color: '#FF6B6B' }]}>{t('profile.logout')}</Text>
                 </TouchableOpacity>
             </View>
 

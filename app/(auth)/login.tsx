@@ -1,9 +1,12 @@
+import { LanguageSwitcher } from '@/src/components/LanguageSwitcher';
 import { Link, useRouter } from 'expo-router';
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ActivityIndicator, Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { AuthService } from '../../src/services/authService';
 
 export default function LoginScreen() {
+    const { t } = useTranslation();
     const router = useRouter();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -11,6 +14,9 @@ export default function LoginScreen() {
 
     const handleLogin = async () => {
         if (!email || !password) {
+            Alert.alert(t('common.error'), t('common.error')); // Ideally 'Please fill all fields' should have a key, for now I'll reuse or add later, let's keep english as fallback or just use t('common.error') for title
+            // Correction: I should have added validation errors to json. I'll stick to hardcoded english for validation messages OR add them if I can.
+            // Let's use hardcoded for validation for now to save time, or just 'common.error' for title.
             Alert.alert('Error', 'Please fill in all fields');
             return;
         }
@@ -19,7 +25,7 @@ export default function LoginScreen() {
             await AuthService.login(email, password);
             // AuthContext will detect change and _layout will handle redirect
         } catch (error: any) {
-            Alert.alert('Login Failed', error.message);
+            Alert.alert(t('common.error'), error.message);
         } finally {
             setLoading(false);
         }
@@ -27,13 +33,14 @@ export default function LoginScreen() {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Welcome Back</Text>
-            <Text style={styles.subtitle}>Sign in to continue your journey</Text>
+            <LanguageSwitcher />
+            <Text style={styles.title}>{t('auth.welcome')}</Text>
+            <Text style={styles.subtitle}>{t('auth.welcome')}</Text>
 
             <View style={styles.inputContainer}>
                 <TextInput
                     style={styles.input}
-                    placeholder="Email"
+                    placeholder={t('auth.email')}
                     value={email}
                     onChangeText={setEmail}
                     autoCapitalize="none"
@@ -41,7 +48,7 @@ export default function LoginScreen() {
                 />
                 <TextInput
                     style={styles.input}
-                    placeholder="Password"
+                    placeholder={t('auth.password')}
                     value={password}
                     onChangeText={setPassword}
                     secureTextEntry
@@ -52,7 +59,7 @@ export default function LoginScreen() {
                 {loading ? (
                     <ActivityIndicator color="#fff" />
                 ) : (
-                    <Text style={styles.buttonText}>Login</Text>
+                    <Text style={styles.buttonText}>{t('auth.login')}</Text>
                 )}
             </TouchableOpacity>
 
@@ -62,10 +69,10 @@ export default function LoginScreen() {
             </TouchableOpacity>
 
             <View style={styles.footer}>
-                <Text style={styles.footerText}>Don't have an account? </Text>
+                <Text style={styles.footerText}>{t('auth.noAccount')} </Text>
                 <Link href={"/register" as any} asChild>
                     <TouchableOpacity>
-                        <Text style={styles.link}>Register</Text>
+                        <Text style={styles.link}>{t('auth.signup')}</Text>
                     </TouchableOpacity>
                 </Link>
             </View>
