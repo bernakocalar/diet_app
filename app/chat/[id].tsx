@@ -13,12 +13,14 @@ import {
     View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useAuth } from '../../src/contexts/AuthContext';
 import { Message, MessageService } from '../../src/services/messageService';
 
 export default function ChatDetailScreen() {
     const { id } = useLocalSearchParams();
     const router = useRouter();
     const insets = useSafeAreaInsets();
+    const { user, userProfile } = useAuth();
 
     const [messages, setMessages] = useState<Message[]>([]);
     const [inputText, setInputText] = useState('');
@@ -27,33 +29,27 @@ export default function ChatDetailScreen() {
     const conversationId = Array.isArray(id) ? id[0] : id;
 
     useEffect(() => {
-        const loadMessages = async () => {
-            if (conversationId) {
-                try {
-                    const data = await MessageService.getMessages(conversationId);
-                    setMessages(data);
-                } catch (error) {
-                    console.error("Failed to load messages:", error);
-                } finally {
-                    setLoading(false);
-                }
-            }
-        };
-        loadMessages();
-    }, [conversationId]);
+        if (conversationId && user) {
+            const unsubscribe = MessageService.subscribeToMessages(conversationId, user.uid, (newMessages) => {
+                setMessages(newMessages);
+                setLoading(false);
+            });
+            return () => unsubscribe();
+        }
+    }, [conversationId, user]);
 
     const handleSend = async () => {
-        if (!inputText.trim() || !conversationId) return;
+        if (!inputText.trim() || !conversationId || !user) return;
 
         const textToSend = inputText;
         setInputText(''); // Optimistic clear
 
         try {
-            const newMessage = await MessageService.sendMessage(conversationId, textToSend);
-            setMessages((prev) => [...prev, newMessage]);
+            const senderName = user.displayName || userProfile?.displayName || "User";
+            await MessageService.sendMessage(conversationId, textToSend, user.uid, senderName);
+            // No need to manually update state, subscription will handle it
         } catch (error) {
             console.error("Failed to send message:", error);
-            // Optionally handle error (e.g., show toast, restore input)
         }
     };
 

@@ -1,4 +1,5 @@
 import { DietPackage } from "../types/package";
+import { AuthService } from "./authService";
 
 // Mock Data
 const MOCK_PACKAGES: DietPackage[] = [
@@ -68,8 +69,7 @@ export const PackageService = {
         // We can just log it for now as the specialized user update is handled in AuthService usually? 
         // Wait, packageService calls updateDoc on users.
 
-        // We should replicate that update in AsyncStorage
-        const { AuthService } = require('./authService'); // Avoid circular dependency issues at top level if any, though here it's fine
+        // We should replicate that update in Firestore via AuthService
         await AuthService.updateUserProfile(userId, { packageId });
     },
 

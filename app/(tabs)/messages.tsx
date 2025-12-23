@@ -4,18 +4,22 @@ import { useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { Pressable, RefreshControl, StyleSheet, Text, View } from 'react-native';
 import Animated, { FadeInDown, Layout, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
+import { useAuth } from '../../src/contexts/AuthContext';
 import { Conversation, MessageService } from '../../src/services/messageService';
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 export default function MessagesScreen() {
+    const router = useRouter();
+    const { user } = useAuth();
     const [conversations, setConversations] = useState<Conversation[]>([]);
     const [loading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
 
     const fetchMessages = async () => {
+        if (!user) return;
         try {
-            const data = await MessageService.getConversations('current-user-id');
+            const data = await MessageService.getConversations(user.uid);
             setConversations(data);
         } catch (error) {
             console.error(error);

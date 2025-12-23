@@ -3,17 +3,20 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { FlatList, RefreshControl, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useAuth } from '../../src/contexts/AuthContext';
 import { Group, GroupService } from '../../src/services/groupService';
 
 export default function GroupsScreen() {
     const router = useRouter();
+    const { user } = useAuth();
     const [groups, setGroups] = useState<Group[]>([]);
     const [loading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
 
     const fetchGroups = async () => {
+        if (!user) return;
         try {
-            const data = await GroupService.getUserGroups('current-user-id');
+            const data = await GroupService.getUserGroups(user.uid);
             setGroups(data);
         } catch (error) {
             console.error(error);
