@@ -251,19 +251,19 @@ export default function HomeScreen() {
             <Text style={styles.sectionTitle}>{t('home.todaysPlan', "Today's Plan")}</Text>
             {userProfile?.currentDietId && (
               <TouchableOpacity onPress={() => router.push('/(tabs)/profile?screen=diet-preferences')}>
-                <Text style={{ color: Colors.light.primary }}>Change</Text>
+                <Text style={{ color: Colors.light.primary }}>{t('home.change', 'Change')}</Text>
               </TouchableOpacity>
             )}
           </View>
 
           {!userProfile?.currentDietId ? (
             <View style={styles.emptyState}>
-              <Text style={{ color: '#ccc', marginBottom: 10 }}>No diet selected yet.</Text>
+              <Text style={{ color: '#ccc', marginBottom: 10 }}>{t('home.noDietSelected', 'No diet selected yet.')}</Text>
               <TouchableOpacity
                 style={styles.selectDietButton}
                 onPress={() => router.push('/profile/diet-preferences')}
               >
-                <Text style={styles.selectDietText}>Select a Diet Program</Text>
+                <Text style={styles.selectDietText}>{t('home.selectDiet', 'Select a Diet Program')}</Text>
               </TouchableOpacity>
             </View>
           ) : dailyPlan ? (
@@ -292,7 +292,7 @@ export default function HomeScreen() {
               </View>
             ))
           ) : (
-            <Text style={{ color: '#ccc' }}>Loading plan...</Text>
+            <Text style={{ color: '#ccc' }}>{t('home.loadingPlan', 'Loading plan...')}</Text>
           )}
         </View>
 
@@ -337,10 +337,10 @@ export default function HomeScreen() {
           <View style={styles.modalOverlay}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
               <View style={styles.modalContent}>
-                <Text style={styles.modalTitle}>Update Steps</Text>
+                <Text style={styles.modalTitle}>{t('home.updateSteps', 'Update Steps')}</Text>
                 <TextInput
                   style={styles.modalInput}
-                  placeholder="Enter steps count"
+                  placeholder={t('home.enterSteps', 'Enter steps count')}
                   placeholderTextColor="#999"
                   keyboardType="numeric"
                   value={newSteps}
@@ -348,10 +348,10 @@ export default function HomeScreen() {
                 />
                 <View style={styles.modalActions}>
                   <TouchableOpacity style={[styles.modalButton, styles.cancelButton]} onPress={() => setStepsModalVisible(false)}>
-                    <Text style={styles.cancelButtonText}>Cancel</Text>
+                    <Text style={styles.cancelButtonText}>{t('common.cancel', 'Cancel')}</Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={[styles.modalButton, styles.saveButton]} onPress={handleUpdateSteps}>
-                    <Text style={styles.saveButtonText}>Save</Text>
+                    <Text style={styles.saveButtonText}>{t('common.save', 'Save')}</Text>
                   </TouchableOpacity>
                 </View>
               </View>

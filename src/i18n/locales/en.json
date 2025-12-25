@@ -33,7 +33,24 @@
         "community": "Community",
         "logMeal": "Log Meal",
         "quickActions": "Quick Actions",
-        "dailyTips": "Daily Tips"
+        "dailyTips": "Daily Tips",
+        "todaysPlan": "Today's Plan",
+        "nutritionGoals": "Nutrition Goals",
+        "protein": "Protein",
+        "carbs": "Carbs",
+        "fat": "Fat",
+        "change": "Change",
+        "noDietSelected": "No diet selected yet.",
+        "selectDiet": "Select a Diet Program",
+        "loadingPlan": "Loading plan...",
+        "updateSteps": "Update Steps",
+        "enterSteps": "Enter steps count"
+    },
+    "water": {
+        "title": "Add Water",
+        "tapToAdd": "Tap to add water",
+        "glass": "Glass",
+        "bottle": "Bottle"
     },
     "groups": {
         "title": "My Groups",

@@ -33,7 +33,24 @@
         "community": "Topluluk",
         "logMeal": "Öğün Ekle",
         "quickActions": "Hızlı İşlemler",
-        "dailyTips": "Günlük İpuçları"
+        "dailyTips": "Günlük İpuçları",
+        "todaysPlan": "Bugünün Planı",
+        "nutritionGoals": "Beslenme Hedefleri",
+        "protein": "Protein",
+        "carbs": "Karbonhidrat",
+        "fat": "Yağ",
+        "change": "Değiştir",
+        "noDietSelected": "Henüz diyet seçilmedi.",
+        "selectDiet": "Diyet Programı Seç",
+        "loadingPlan": "Plan yükleniyor...",
+        "updateSteps": "Adımları Güncelle",
+        "enterSteps": "Adım sayısını girin"
+    },
+    "water": {
+        "title": "Su Ekle",
+        "tapToAdd": "Su eklemek için dokunun",
+        "glass": "Bardak",
+        "bottle": "Şişe"
     },
     "groups": {
         "title": "Gruplarım",

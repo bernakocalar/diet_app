@@ -56,7 +56,7 @@ export default function WaterScreen() {
                     <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
                         <Ionicons name="arrow-back" size={24} color="#fff" />
                     </TouchableOpacity>
-                    <Text style={styles.headerTitle}>{t('home.addWater', 'Add Water')}</Text>
+                    <Text style={styles.headerTitle}>{t('water.title', 'Add Water')}</Text>
                     <View style={{ width: 40 }} />
                 </View>
             </LinearGradient>
@@ -73,7 +73,7 @@ export default function WaterScreen() {
                             </View>
                         </View>
 
-                        <Text style={styles.instruction}>Tap to add water</Text>
+                        <Text style={styles.instruction}>{t('water.tapToAdd', 'Tap to add water')}</Text>
 
                         <View style={styles.actions}>
                             <TouchableOpacity
@@ -82,7 +82,7 @@ export default function WaterScreen() {
                                 disabled={adding}
                             >
                                 <Ionicons name="water" size={30} color="#fff" />
-                                <Text style={styles.actionText}>Glass</Text>
+                                <Text style={styles.actionText}>{t('water.glass', 'Glass')}</Text>
                                 <Text style={styles.actionSubText}>+200ml</Text>
                             </TouchableOpacity>
 
@@ -92,7 +92,7 @@ export default function WaterScreen() {
                                 disabled={adding}
                             >
                                 <Ionicons name="beer-outline" size={30} color="#fff" />
-                                <Text style={styles.actionText}>Bottle</Text>
+                                <Text style={styles.actionText}>{t('water.bottle', 'Bottle')}</Text>
                                 <Text style={styles.actionSubText}>+500ml</Text>
                             </TouchableOpacity>
                         </View>

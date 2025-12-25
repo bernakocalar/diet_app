@@ -51,8 +51,8 @@ export default function PersonalDetailsScreen() {
         try {
             await AuthService.updateUserProfile(user.uid, {
                 displayName: name,
-                weight: weight ? parseFloat(weight) : undefined,
-                height: height ? parseFloat(height) : undefined,
+                weight: weight ? parseFloat(weight.replace(',', '.')) : undefined,
+                height: height ? parseFloat(height.replace(',', '.')) : undefined,
                 age: age ? parseInt(age) : undefined,
             });
 
