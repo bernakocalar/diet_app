@@ -11,6 +11,7 @@ import {
     TouchableOpacity,
     View
 } from 'react-native';
+import { Colors } from '../../constants/theme';
 import { Group, GroupService } from '../../src/services/groupService';
 
 export default function GroupDetailScreen() {
@@ -65,7 +66,7 @@ export default function GroupDetailScreen() {
                 {/* Hero Header */}
                 <View style={styles.heroContainer}>
                     <LinearGradient
-                        colors={['#0f2027', '#203a43', '#2c5364']}
+                        colors={Colors.gradients.ocean}
                         start={{ x: 0, y: 0 }}
                         end={{ x: 1, y: 1 }}
                         style={styles.heroGradient}
@@ -88,11 +89,11 @@ export default function GroupDetailScreen() {
                     {/* Next Session Card */}
                     {group.nextSession && (
                         <LinearGradient
-                            colors={['rgba(255, 159, 67, 0.1)', 'rgba(255, 159, 67, 0.05)']}
+                            colors={['rgba(42, 157, 143, 0.1)', 'rgba(42, 157, 143, 0.05)']}
                             style={styles.sessionCard}
                         >
                             <View style={styles.sessionIcon}>
-                                <Ionicons name="time" size={24} color="#ff9f43" />
+                                <Ionicons name="time" size={24} color={Colors.light.primary} />
                             </View>
                             <View style={styles.sessionInfo}>
                                 <Text style={styles.sessionLabel}>{t('groups.nextSession')}</Text>
@@ -131,7 +132,7 @@ export default function GroupDetailScreen() {
                     <View style={styles.actionsContainer}>
                         <TouchableOpacity style={styles.primaryAction} activeOpacity={0.8}>
                             <LinearGradient
-                                colors={['#00d2d3', '#00a8ff']}
+                                colors={Colors.gradients.primary}
                                 start={{ x: 0, y: 0 }}
                                 end={{ x: 1, y: 0 }}
                                 style={styles.gradientButton}
@@ -152,11 +153,11 @@ export default function GroupDetailScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#121212',
+        backgroundColor: Colors.dark.background,
     },
     centerContainer: {
         flex: 1,
-        backgroundColor: '#121212',
+        backgroundColor: Colors.dark.background,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -215,14 +216,14 @@ const styles = StyleSheet.create({
         padding: 16,
         borderRadius: 20,
         borderWidth: 1,
-        borderColor: 'rgba(255, 159, 67, 0.3)',
+        borderColor: 'rgba(42, 157, 143, 0.3)',
         marginBottom: 30,
     },
     sessionIcon: {
         width: 40,
         height: 40,
         borderRadius: 20,
-        backgroundColor: 'rgba(255, 159, 67, 0.1)',
+        backgroundColor: 'rgba(42, 157, 143, 0.1)',
         justifyContent: 'center',
         alignItems: 'center',
         marginRight: 15,
@@ -232,7 +233,7 @@ const styles = StyleSheet.create({
     },
     sessionLabel: {
         fontSize: 12,
-        color: '#ff9f43',
+        color: Colors.light.primary,
         marginBottom: 2,
     },
     sessionValue: {
@@ -241,7 +242,7 @@ const styles = StyleSheet.create({
         color: '#fff',
     },
     joinButton: {
-        backgroundColor: '#ff9f43',
+        backgroundColor: Colors.light.primary,
         paddingHorizontal: 15,
         paddingVertical: 8,
         borderRadius: 20,
@@ -272,7 +273,7 @@ const styles = StyleSheet.create({
         color: '#ccc',
     },
     seeAllText: {
-        color: '#00d2d3',
+        color: Colors.light.primary,
         fontSize: 14,
     },
     membersList: {
@@ -325,7 +326,7 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     backButtonText: {
-        color: '#00d2d3',
+        color: Colors.light.primary,
         fontSize: 16,
     }
 });

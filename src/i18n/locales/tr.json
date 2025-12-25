@@ -25,6 +25,16 @@
         "messages": "Mesajlar",
         "profile": "Profil"
     },
+    "home": {
+        "hello": "Merhaba",
+        "logFood": "Yemek Ekle",
+        "addWater": "Su Ekle",
+        "workout": "Egzersiz",
+        "community": "Topluluk",
+        "logMeal": "Öğün Ekle",
+        "quickActions": "Hızlı İşlemler",
+        "dailyTips": "Günlük İpuçları"
+    },
     "groups": {
         "title": "Gruplarım",
         "subtitle": "Topluluğunla bağlantı kur",

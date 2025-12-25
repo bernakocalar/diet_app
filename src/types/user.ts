@@ -10,4 +10,5 @@ export interface UserProfile {
     activityLevel?: 'sedentary' | 'light' | 'moderate' | 'active' | 'very_active';
     packageId?: string; // The diet package they selected
     teamId?: string; // The team they joined
+    currentDietId?: string; // The specifically selected diet program (keto, vegan, etc.)
 }

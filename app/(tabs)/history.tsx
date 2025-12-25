@@ -2,6 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useState } from 'react';
 import { FlatList, RefreshControl, StyleSheet, Text, View } from 'react-native';
+import { Colors } from '../../constants/theme';
 import { HistoryEntry, HistoryService } from '../../src/services/historyService';
 
 export default function HistoryScreen() {
@@ -55,7 +56,7 @@ export default function HistoryScreen() {
     return (
         <View style={styles.container}>
             <LinearGradient
-                colors={['#1a1a1a', '#2d3436']}
+                colors={Colors.gradients.ocean}
                 style={styles.header}
             >
                 <Text style={styles.title}>My History</Text>
@@ -81,7 +82,7 @@ export default function HistoryScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#121212',
+        backgroundColor: Colors.dark.background,
     },
     header: {
         paddingTop: 60,
@@ -138,7 +139,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
     },
     weightText: {
-        color: '#4CD137',
+        color: '#167c7cff',
         fontWeight: 'bold',
         fontSize: 14,
     },

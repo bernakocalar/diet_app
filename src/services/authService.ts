@@ -7,7 +7,8 @@ import {
     User
 } from "firebase/auth";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
-import { auth, db } from "../config/firebase";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { auth, db, storage } from "../config/firebase";
 import { UserProfile } from "../types/user";
 
 export const AuthService = {
@@ -69,5 +70,32 @@ export const AuthService = {
         // We use set with merge mostly, but updateDoc is stricter (fails if doc doesn't exist).
         // Since we create doc on signup, updateDoc is appropriate.
         await updateDoc(docRef, data);
+    },
+
+    // Upload Profile Image
+    uploadProfileImage: async (uid: string, uri: string): Promise<string> => {
+        try {
+            const response = await fetch(uri);
+            const blob = await response.blob();
+
+            const fileRef = ref(storage, `profile_images/${uid}`);
+            await uploadBytes(fileRef, blob);
+
+            const photoURL = await getDownloadURL(fileRef);
+
+            // Update Auth Profile
+            if (auth.currentUser) {
+                await updateProfile(auth.currentUser, { photoURL });
+            }
+
+            // Update Firestore Profile (if you store it there too)
+            // Ideally we should keep them in sync, checking if UserProfile has photoURL field
+            // user.photoURL is the main source for auth, but good to have in DB
+
+            return photoURL;
+        } catch (error) {
+            console.error("Error uploading profile image: ", error);
+            throw error;
+        }
     }
 };

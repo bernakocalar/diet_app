@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, RefreshControl, StyleSheet, Text, View } from 'react-native';
 import Animated, { FadeInDown, Layout, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
+import { Colors } from '../../constants/theme';
 import { useAuth } from '../../src/contexts/AuthContext';
 import { Conversation, MessageService } from '../../src/services/messageService';
 
@@ -122,7 +123,7 @@ const MessageItem = ({
             layout={Layout.springify()}
         >
             <LinearGradient
-                colors={['#FE6B8B', '#FF8E53']}
+                colors={Colors.gradients.primary}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 1 }}
                 style={styles.avatarContainer}
@@ -156,7 +157,7 @@ const MessageItem = ({
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#121212',
+        backgroundColor: Colors.dark.background,
     },
     header: {
         paddingTop: 60,
@@ -165,7 +166,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: '#121212',
+        backgroundColor: Colors.dark.background,
     },
     title: {
         fontSize: 34,
@@ -187,7 +188,7 @@ const styles = StyleSheet.create({
         paddingVertical: 15,
         borderBottomWidth: 1,
         borderBottomColor: '#222',
-        backgroundColor: '#121212', // Ensure background for animation
+        backgroundColor: Colors.dark.background, // Ensure background for animation
     },
     avatarContainer: {
         width: 50,
@@ -230,7 +231,7 @@ const styles = StyleSheet.create({
         fontWeight: '600',
     },
     badge: {
-        backgroundColor: '#0984e3',
+        backgroundColor: Colors.light.primary,
         borderRadius: 10,
         paddingHorizontal: 8,
         paddingVertical: 2,

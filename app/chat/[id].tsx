@@ -14,6 +14,7 @@ import {
     View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Colors } from '../../constants/theme';
 import { useAuth } from '../../src/contexts/AuthContext';
 import { Message, MessageService } from '../../src/services/messageService';
 
@@ -124,7 +125,7 @@ export default function ChatDetailScreen() {
                         disabled={!inputText.trim()}
                     >
                         <LinearGradient
-                            colors={['#00d2d3', '#00a8ff']}
+                            colors={Colors.gradients.primary}
                             style={styles.sendButtonGradient}
                         >
                             <Ionicons name="send" size={20} color="#fff" />
@@ -139,7 +140,7 @@ export default function ChatDetailScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#121212',
+        backgroundColor: Colors.dark.background,
     },
     header: {
         flexDirection: 'row',
@@ -199,7 +200,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
     },
     myBubble: {
-        backgroundColor: '#00d2d3',
+        backgroundColor: Colors.light.primary,
         borderBottomRightRadius: 4,
     },
     otherBubble: {

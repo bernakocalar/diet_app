@@ -3,6 +3,7 @@ import { Tabs } from 'expo-router';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Platform } from 'react-native';
+import { Colors } from '../../constants/theme';
 
 export default function TabLayout() {
   const { t } = useTranslation();
@@ -10,11 +11,11 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: '#00d2d3', // Cyan/Teal
-        tabBarInactiveTintColor: '#888',
+        tabBarActiveTintColor: Colors.light.primary,
+        tabBarInactiveTintColor: Colors.dark.icon,
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: '#121212',
+          backgroundColor: Colors.dark.background,
           borderTopColor: '#333',
           height: Platform.OS === 'ios' ? 88 : 60,
           paddingBottom: Platform.OS === 'ios' ? 28 : 8,

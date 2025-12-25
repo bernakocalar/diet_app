@@ -25,6 +25,16 @@
         "messages": "Messages",
         "profile": "Profile"
     },
+    "home": {
+        "hello": "Hello",
+        "logFood": "Log Food",
+        "addWater": "Add Water",
+        "workout": "Workout",
+        "community": "Community",
+        "logMeal": "Log Meal",
+        "quickActions": "Quick Actions",
+        "dailyTips": "Daily Tips"
+    },
     "groups": {
         "title": "My Groups",
         "subtitle": "Connect with your community",

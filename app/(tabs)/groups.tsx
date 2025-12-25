@@ -4,6 +4,7 @@ import { useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FlatList, RefreshControl, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Colors } from '../../constants/theme';
 import { useAuth } from '../../src/contexts/AuthContext';
 import { Group, GroupService } from '../../src/services/groupService';
 
@@ -51,7 +52,7 @@ export default function GroupsScreen() {
             >
                 <View style={styles.headerRow}>
                     <View style={styles.iconContainer}>
-                        <Ionicons name="people" size={24} color="#00d2d3" />
+                        <Ionicons name="people" size={24} color={Colors.light.primary} />
                     </View>
                     <View style={styles.headerInfo}>
                         <Text style={styles.groupName}>{item.name}</Text>
@@ -75,7 +76,7 @@ export default function GroupsScreen() {
     return (
         <View style={styles.container}>
             <LinearGradient
-                colors={['#0F2027', '#203A43']}
+                colors={Colors.gradients.ocean}
                 style={styles.header}
             >
                 <Text style={styles.title}>{t('groups.title')}</Text>
@@ -101,7 +102,7 @@ export default function GroupsScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#121212',
+        backgroundColor: Colors.dark.background,
     },
     header: {
         paddingTop: 60,
@@ -142,7 +143,7 @@ const styles = StyleSheet.create({
         width: 48,
         height: 48,
         borderRadius: 24,
-        backgroundColor: 'rgba(0, 210, 211, 0.15)',
+        backgroundColor: 'rgba(42, 157, 143, 0.15)',
         justifyContent: 'center',
         alignItems: 'center',
         marginRight: 15,
