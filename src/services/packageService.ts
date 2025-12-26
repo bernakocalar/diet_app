@@ -60,7 +60,7 @@ export const PackageService = {
     // Assign a package to a user
     assignPackageToUser: async (userId: string, packageId: string) => {
         await new Promise(resolve => setTimeout(resolve, 500));
-        console.log(`[Mock] Assigned package ${packageId} to user ${userId}`);
+        // console.log(`[Mock] Assigned package ${packageId} to user ${userId}`);
         // In a real mock with state, we would update the user profile in AsyncStorage here.
         // For now, let's assume the UI handles the optimism or we trust the auth service update.
 
