@@ -15,11 +15,11 @@ export default function RegisterScreen() {
 
     const handleRegister = async () => {
         if (!email || !password || !confirmPassword) {
-            Alert.alert('Error', 'Please fill in all fields');
+            Alert.alert(t('common.error'), t('validation.fillAll'));
             return;
         }
         if (password !== confirmPassword) {
-            Alert.alert('Error', 'Passwords do not match');
+            Alert.alert(t('common.error'), t('validation.passwordMatch'));
             return;
         }
         setLoading(true);

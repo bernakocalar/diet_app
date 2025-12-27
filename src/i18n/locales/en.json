@@ -8,6 +8,10 @@
         "next": "Next",
         "search": "Search"
     },
+    "validation": {
+        "fillAll": "Please fill in all fields",
+        "passwordMatch": "Passwords do not match"
+    },
     "auth": {
         "login": "Login",
         "signup": "Sign Up",

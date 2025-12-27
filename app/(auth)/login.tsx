@@ -14,10 +14,7 @@ export default function LoginScreen() {
 
     const handleLogin = async () => {
         if (!email || !password) {
-            Alert.alert(t('common.error'), t('common.error')); // Ideally 'Please fill all fields' should have a key, for now I'll reuse or add later, let's keep english as fallback or just use t('common.error') for title
-            // Correction: I should have added validation errors to json. I'll stick to hardcoded english for validation messages OR add them if I can.
-            // Let's use hardcoded for validation for now to save time, or just 'common.error' for title.
-            Alert.alert('Error', 'Please fill in all fields');
+            Alert.alert(t('common.error'), t('validation.fillAll'));
             return;
         }
         setLoading(true);
@@ -63,10 +60,7 @@ export default function LoginScreen() {
                 )}
             </TouchableOpacity>
 
-            {/* TEMP: Seed Button */}
-            <TouchableOpacity onPress={() => import('../../src/utils/seedPackages').then(m => m.seedPackages().then(() => Alert.alert('Seeded!')))} style={{ marginTop: 10, alignSelf: 'center' }}>
-                <Text style={{ color: '#ccc', fontSize: 12 }}>Seed Data</Text>
-            </TouchableOpacity>
+
 
             <View style={styles.footer}>
                 <Text style={styles.footerText}>{t('auth.noAccount')} </Text>
